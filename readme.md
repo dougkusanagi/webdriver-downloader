@@ -17,4 +17,16 @@ $webdriver_exe_path = (new WebdriverManager)
         path: '/path_to_download',
         force: true
     );
+
+var_dump($webdriver_exe_path);
+
+/** Or you can use a helper */
+
+$webdriver_exe_path = (new WebdriverManager)
+    ->downloadChromeWebdriver(
+        path: '/path_to_download',
+        force: true
+    );
+
+var_dump($webdriver_exe_path);
 ```
