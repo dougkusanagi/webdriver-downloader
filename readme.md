@@ -1,11 +1,11 @@
 # Webdriver Manager
 
-Usefull if you want to update webdriver if needed. For now, only works for Chrome Webdriver.
+Usefull if you want to download the new version of webdriver. For now, only works for Chrome Webdriver.
 
 ## Installation
 
 ```bash
-composer require dougkusanagi/webdriver-manager
+composer require dougkusanagi/webdriver-downloader
 ```
 
 ## Usage
