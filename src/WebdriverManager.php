@@ -13,14 +13,14 @@ class WebdriverManager
         BrowserEnum::CHROME->name => WebdriverManagerChrome::class,
     ];
 
-    public function downloadTo(BrowserEnum $browser, string $path = './'): self
+    public function downloadTo(BrowserEnum $browser, string $path = './', bool $force = false): self
     {
         $browser_info = $this->getBrowserInfo();
         $driver = $this->getDriver($browser);
         $download_url = $driver->getDownloadUrl($browser_info['browser_version']);
-        $this->filename = basename($download_url);
+        $this->filename = "{$path}/" . basename($download_url);
 
-        if (!$this->saveFileTo($download_url, "{$path}/" . $this->filename)) {
+        if (!$this->saveFileTo($download_url, $this->filename, $force)) {
             throw new \Exception("Error saving file from {$download_url} to {$this->filename}");
         }
 
@@ -50,7 +50,7 @@ class WebdriverManager
         return true;
     }
 
-    public function saveFileTo(string $download_url, string $pathname, bool $force = false): bool
+    private function saveFileTo(string $download_url, string $pathname, bool $force = false): bool
     {
         $path = dirname($pathname);
 
@@ -67,7 +67,7 @@ class WebdriverManager
         }
 
         if (is_file($pathname) && !$force) {
-            throw new \Exception("File {$pathname} already exists");
+            throw new \Exception("File {$pathname} already exists, you can try to use downloadTo(force:true)");
         }
 
         $file_contents = file_get_contents($download_url);

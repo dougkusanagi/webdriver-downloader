@@ -18,8 +18,6 @@ class WebdriverManagerChrome extends AbstractWebdriverManager
             throw new \Exception('Invalid URL');
         }
 
-        // dd(self::BASE_URL . $this->getVersion($chromedriver_url) . 'chromedriver_win32.zip');
-
         return self::BASE_URL . $this->getVersion($chromedriver_url) . 'chromedriver_win32.zip';
     }
 

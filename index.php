@@ -22,6 +22,8 @@ $whoops = new \Whoops\Run;
 $whoops->prependHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
+$path = __DIR__ . '/chromedriver';
+
 (new WebdriverManager)
-    ->downloadTo(BrowserEnum::CHROME, __DIR__ . '/chromedriver', true)
-    ->extractTo(__DIR__ . '/chromedriver');
+    ->downloadTo(BrowserEnum::CHROME, $path, true)
+    ->extractTo($path);
