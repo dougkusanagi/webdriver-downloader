@@ -4,5 +4,5 @@ namespace Src;
 
 abstract class AbstractDownloadWebdriver
 {
-    abstract public function handle(string $version, string $path, bool $force): string;
+    abstract public function handle(string $version, string $path, bool $replaceExisting): string;
 }

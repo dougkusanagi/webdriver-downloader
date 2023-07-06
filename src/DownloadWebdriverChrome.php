@@ -10,7 +10,7 @@ class DownloadWebdriverChrome extends AbstractDownloadWebdriver
     const BASE_URL_DOWNLOAD = 'https://chromedriver.storage.googleapis.com/';
     const DOWNLOAD_PAGE = 'https://chromedriver.chromium.org/downloads';
 
-    public function handle(string $version, string $path, bool $force): string
+    public function handle(string $version, string $path, bool $replaceExisting): string
     {
         // url example https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_win32.zip
         $chromedriver_url = $this->searchVersionLink($version);
@@ -24,7 +24,7 @@ class DownloadWebdriverChrome extends AbstractDownloadWebdriver
 
         $filepath = "{$path}/" . $filename;
 
-        if (!$this->saveFileTo($download_url, $filepath, $force)) {
+        if (!$this->saveFileTo($download_url, $filepath, $replaceExisting)) {
             throw new \Exception("Error saving file from {$download_url} to {$filepath}");
         }
 
@@ -56,7 +56,7 @@ class DownloadWebdriverChrome extends AbstractDownloadWebdriver
         return true;
     }
 
-    private function saveFileTo(string $download_url, string $pathname, bool $force = false): bool
+    private function saveFileTo(string $download_url, string $pathname, bool $replaceExisting = false): bool
     {
         $path = dirname($pathname);
 
@@ -66,13 +66,13 @@ class DownloadWebdriverChrome extends AbstractDownloadWebdriver
             throw new \Exception("Error saving file {$pathname} to {$path}");
         }
 
-        if (is_file($pathname) && $force) {
+        if (is_file($pathname) && $replaceExisting) {
             if (!unlink($pathname)) {
                 throw new \Exception("Error deleting file {$pathname}");
             }
         }
 
-        if (is_file($pathname) && !$force) {
+        if (is_file($pathname) && !$replaceExisting) {
             throw new \Exception("File {$pathname} already exists, you can try to use downloadTo(force:true)");
         }
 

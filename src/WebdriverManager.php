@@ -11,11 +11,11 @@ class WebdriverManager
         BrowserEnum::CHROME->name => DownloadWebdriverChrome::class,
     ];
 
-    public function download(BrowserEnum $browser, string $path = './', bool $force = false): string
+    public function download(BrowserEnum $browser, string $path = './', bool $replaceExisting = false): string
     {
         $browser_info = $this->getBrowserInfo();
         $driver = $this->getDriver($browser);
-        $webdriver_exe = $driver->handle($browser_info['browser_version'], $path, $force);
+        $webdriver_exe = $driver->handle($browser_info['browser_version'], $path, $replaceExisting);
 
         if (!is_file($webdriver_exe)) {
             throw new \Exception("There is no file downloaded");
@@ -24,11 +24,11 @@ class WebdriverManager
         return $webdriver_exe;
     }
 
-    public function downloadChromeWebdriver(string $path = './', bool $force = false): string
+    public function downloadForChrome(string $path = './', bool $replaceExisting = false): string
     {
         $browser_info = $this->getBrowserInfo();
         $driver = $this->getDriver(BrowserEnum::CHROME);
-        $webdriver_exe = $driver->handle($browser_info['browser_version'], $path, $force);
+        $webdriver_exe = $driver->handle($browser_info['browser_version'], $path, $replaceExisting);
 
         if (!is_file($webdriver_exe)) {
             throw new \Exception("There is no file downloaded");
